@@ -1,0 +1,18 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Ensure the charts resize properly */
+#summaryChart {
+    width: 100% !important;
+}
+
+/* Darker background for navigation */
+.navbar {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Cards spacing */
+.card {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}

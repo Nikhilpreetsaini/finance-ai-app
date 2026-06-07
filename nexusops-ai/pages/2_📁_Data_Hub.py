@@ -3,6 +3,7 @@ from typing import Optional
 
 import pandas as pd
 import streamlit as st
+from pathlib import Path
 
 
 def load_sample_data() -> pd.DataFrame:
@@ -11,7 +12,9 @@ def load_sample_data() -> pd.DataFrame:
     Returns:
         DataFrame: A pandas DataFrame containing the sample data.
     """
-    sample_path = "data/sample/sales_data.csv"
+        base_dir = Path(__file__).resolve().parents[1]
+    sample_path = base_dir / "data" / "sample" / "sales_data.csv"
+
     return pd.read_csv(sample_path, parse_dates=["date"])
 
 

@@ -1,52 +1,53 @@
 # AI‑Powered Personal Finance Manager
 
-This project is a modern, responsive web application that helps individuals track their income and expenses while leveraging simple AI‑driven categorisation and personalised insights. Built entirely with HTML, CSS and vanilla JavaScript, the app is lightweight, deploys easily on any static hosting provider and stores data locally in the browser (so no external database is required).  
-It uses **Bootstrap 5** for styling and **Chart.js** for dynamic charts.  
+A professional, client-side personal finance dashboard built with HTML, CSS and JavaScript. It works as a static site and stores data locally in the browser, so it can be deployed easily on GitHub Pages, Render Static Sites, Netlify or any simple static host.
 
 ## Features
 
-* **User registration and login** – Users can create an account and securely sign in. Credentials are stored in the browser’s `localStorage` (encoded) to keep the app server‑free.  
-* **AI‑powered categorisation** – When a transaction is added, the description is analysed against a set of keywords to assign a spending category automatically (e.g. food, transport, utilities). Income transactions are categorised separately.  
-* **Expense and income tracking** – Add transactions with date, description, amount and type (income or expense). Data is saved per user and loaded whenever the user logs back in.  
-* **Dynamic charts and summaries** – The dashboard displays a doughnut chart visualising spending distribution across categories and shows total income, total expense and the highest expense category with its percentage share.  
-* **Responsive design** – The UI adapts to different screen sizes and devices, making it usable on desktops, tablets and phones.  
-* **Offline‑first experience** – All data is stored locally in the browser so the app works without an internet connection after the first load.  
+- User registration and login with hashed passwords.
+- Demo two-factor authentication after login.
+- Income and expense tracking.
+- Custom categories and category management.
+- Multi-currency display support for INR, USD and EUR.
+- Monthly budget progress with visual alerts.
+- Savings goals with contribution tracking.
+- Upcoming bill reminders and mark-as-paid flow.
+- Interactive monthly calendar with transaction totals.
+- Searchable transaction history.
+- Chart.js spending summary.
+- CSV import/export.
+- PDF report generation.
+- Dark mode.
+- Progressive Web App support through `manifest.json` and `sw.js`.
 
-## Getting Started
+## Deployment
 
-This project doesn’t require any server‑side installation. To run it locally during development:
+This is a static web application. No build command is required.
 
-1. Clone or download this repository.  
-2. Open `index.html` in a modern web browser (Chrome, Firefox, Safari, Edge).  
-3. Register a new account and start adding transactions.
+For GitHub Pages:
 
-### Deployment
+1. Go to repository Settings.
+2. Open Pages.
+3. Select the `main` branch and root directory.
+4. Save and wait for GitHub Pages to finish building.
 
-Because the app is completely static, it can be deployed to any static hosting service such as GitHub Pages, Netlify or Render. Simply upload the contents of the `finance-ai-app` directory (all files) to your hosting provider.
+Live URL format:
 
-To deploy on **Render**:
-
-1. Create a new **Static Site** in Render and connect it to your GitHub repository containing this project.  
-2. Set the **Build Command** to `npm install` (optional if you don’t have any build step) and the **Publish Directory** to `finance-ai-app`.  
-3. Render will automatically serve `index.html` as the entry point.
-
-## Project Structure
-
-```
-finance-ai-app/
-├── index.html        # Main HTML file containing the page structure
-├── style.css         # Custom CSS for fine‑tuned styling
-├── app.js            # JavaScript logic (authentication, transactions, chart)
-└── README.md         # This documentation file
+```text
+https://<username>.github.io/finance-ai-app/
 ```
 
-## Limitations & Future Improvements
+## Files
 
-While this project demonstrates a functional personal finance tool, there are a few limitations worth noting:
+```text
+index.html      Main app layout
+style.css       Custom styling and dark mode
+app.js          Dashboard, auth, charts, bills, goals and exports
+manifest.json   PWA manifest
+sw.js           Service worker
+README.md       Project documentation
+```
 
-* **Security** – Passwords are encoded using `btoa` and stored in `localStorage`. In a production system you would never store credentials client‑side. Implementing a proper backend with password hashing and secure session management would be required for real‑world use.  
-* **AI categorisation** – The categorisation logic uses simple keyword matching. A more advanced version could integrate a lightweight machine‑learning model or call an AI service for smarter categorisation and personalised recommendations.  
-* **Data portability** – All data is stored in the browser; there’s no way to export or sync across devices. Adding an export/import feature or cloud sync (e.g. via Firebase or a custom backend) would make the app more robust.  
-* **Accessibility** – Additional work could be done to improve keyboard navigation and screen reader compatibility.  
+## Note
 
-Despite these limitations, the application serves as a strong foundation for a professional personal finance manager. Feel free to fork, extend and adapt it to suit your own needs!
+This demo stores data in `localStorage`. For production use, add a secure backend, real email/SMS two-factor delivery, and live currency rates.

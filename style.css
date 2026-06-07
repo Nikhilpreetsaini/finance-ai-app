@@ -91,6 +91,11 @@ body {
     margin-bottom: 0.5rem;
 }
 
+/* Debts and investments list styling */
+.debt-item, .investment-item {
+    margin-bottom: 0.5rem;
+}
+
 .goal-item .progress {
     height: 16px;
 }

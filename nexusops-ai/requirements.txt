@@ -5,3 +5,4 @@ scikit-learn>=1.2
 plotly>=5.10
 statsmodels>=0.14
 python-dateutil>=2.8
+xgboost>=2.0

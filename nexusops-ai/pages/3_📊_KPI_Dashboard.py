@@ -60,26 +60,42 @@ def render_dashboard():
         st.info("Please upload data via the Data Hub page first.")
         return
 
-    # Compute KPIs
-    kpis = compute_kpis(dataset)
-    if not kpis:
+    # Let user select which numeric column to analyze
+    numeric_cols = dataset.select_dtypes(include=['number']).columns.tolist()
+    if not numeric_cols:
         st.warning("No numeric columns found in the dataset.")
         return
+    metric_col = st.selectbox("Select metric column", options=numeric_cols)
 
+    # Date range filter if date column exists
+    df_filtered = dataset.copy()
+    if "date" in dataset.columns:
+        min_date, max_date = dataset["date"].min(), dataset["date"].max()
+        date_range = st.date_input(
+            "Date range",
+            value=(min_date, max_date),
+            min_value=min_date,
+            max_value=max_date,
+        )
+        # Ensure tuple length is 2
+        if isinstance(date_range, tuple) and len(date_range) == 2:
+            start_date, end_date = date_range
+            df_filtered = dataset[(dataset["date"] >= pd.to_datetime(start_date)) & (dataset["date"] <= pd.to_datetime(end_date))]
+
+    # Compute KPIs on the filtered data
+    kpis = compute_kpis(df_filtered[["date", metric_col]] if "date" in df_filtered.columns else df_filtered[[metric_col]])
     # Display metric cards
     cols = st.columns(len(kpis))
     for i, (label, value) in enumerate(kpis.items()):
         cols[i].metric(label, f"{value:,.2f}")
 
-    # Plot time series of the first numeric column
-    numeric_cols = dataset.select_dtypes(include=['number']).columns.tolist()
-    metric_col = numeric_cols[0]
-    if "date" in dataset.columns:
-        fig = px.line(dataset.sort_values("date"), x="date", y=metric_col, title=f"{metric_col} Over Time")
+    # Plot time series of the selected numeric column
+    if "date" in df_filtered.columns:
+        fig = px.line(df_filtered.sort_values("date"), x="date", y=metric_col, title=f"{metric_col} Over Time")
         fig.update_layout(xaxis_title="Date", yaxis_title=metric_col)
         st.plotly_chart(fig, use_container_width=True)
     else:
-        st.line_chart(dataset[metric_col], use_container_width=True)
+        st.line_chart(df_filtered[metric_col], use_container_width=True)
 
 
 def main():  # pragma: no cover - entry point for Streamlit

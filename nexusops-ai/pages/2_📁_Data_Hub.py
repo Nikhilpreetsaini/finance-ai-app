@@ -68,13 +68,56 @@ def render_data_hub():
         st.session_state.dataset = load_sample_data()
         st.success("Sample data loaded.")
 
-    # Display dataset if available
+    # Display dataset and quality report if available
     dataset = st.session_state.get("dataset")
     if dataset is not None:
         st.subheader("Preview of Loaded Data")
         st.dataframe(dataset.head())
         st.write("Rows:", len(dataset))
         st.write("Columns:", list(dataset.columns))
+
+        # Compute data quality metrics
+        def _data_quality_report(df: pd.DataFrame) -> pd.DataFrame:
+            """Create a simple data quality report for the loaded dataframe.
+
+            The report includes completeness (non‑null ratio), uniqueness
+            (distinct values ratio) and type information for each column.
+
+            Args:
+                df: Loaded DataFrame.
+
+            Returns:
+                A DataFrame summarising data quality metrics per column.
+            """
+            report_rows = []
+            n_rows = len(df)
+            for col in df.columns:
+                col_data = df[col]
+                missing = col_data.isna().sum()
+                completeness = 1.0 - (missing / n_rows) if n_rows else 0.0
+                unique = col_data.nunique(dropna=True)
+                uniqueness = unique / n_rows if n_rows else 0.0
+                dtype = str(col_data.dtype)
+                report_rows.append({
+                    "Column": col,
+                    "Type": dtype,
+                    "Missing": missing,
+                    "Completeness (%)": round(completeness * 100, 2),
+                    "Distinct": unique,
+                    "Uniqueness (%)": round(uniqueness * 100, 2),
+                })
+            return pd.DataFrame(report_rows)
+
+        dq_report = _data_quality_report(dataset)
+        # Compute an overall data quality score as weighted mean of completeness and uniqueness
+        completeness_score = dq_report["Completeness (%)"].mean() if not dq_report.empty else 0.0
+        uniqueness_score = dq_report["Uniqueness (%)"].mean() if not dq_report.empty else 0.0
+        # Weight completeness higher than uniqueness
+        overall_dq = (0.7 * completeness_score + 0.3 * uniqueness_score) / 100.0
+
+        st.subheader("Data Quality Report")
+        st.dataframe(dq_report)
+        st.write(f"**Overall Data Quality Score:** {overall_dq:.2f} (0–1 scale)")
 
 
 def main():  # pragma: no cover - entry point for Streamlit

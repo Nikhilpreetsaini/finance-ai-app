@@ -18,7 +18,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Finance AI</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="#navbarContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarContent">
@@ -135,7 +135,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="transDescription" class="form-label">Description</label>
-                            <input type="text" class="form-control" id="transDescription" placeholder="e.g., Grocery shopping">
+                        <input type="text" class="form-control" id="transDescription" placeholder="e.g., Grocery shopping">
                         </div>
                         <div class="mb-3">
                             <label for="transAmount" class="form-label">Amount</label>
@@ -203,6 +203,40 @@
                         <button class="btn btn-sm btn-outline-secondary" onclick="promptAddBill()"><i class="fa fa-plus"></i></button>
                     </div>
                     <div class="card-body" id="billsContent"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Debts and Investments row -->
+        <div class="row mb-4">
+            <!-- Debts card -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span>Debts</span>
+                        <button class="btn btn-sm btn-outline-secondary" onclick="promptAddDebt()"><i class="fa fa-plus"></i></button>
+                    </div>
+                    <div class="card-body" id="debtsContent"></div>
+                </div>
+            </div>
+            <!-- Investments card -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span>Investments</span>
+                        <button class="btn btn-sm btn-outline-secondary" onclick="promptAddInvestment()"><i class="fa fa-plus"></i></button>
+                    </div>
+                    <div class="card-body" id="investmentsContent"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Net worth row -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">Net Worth</div>
+                    <div class="card-body" id="netWorthContent"></div>
                 </div>
             </div>
         </div>
